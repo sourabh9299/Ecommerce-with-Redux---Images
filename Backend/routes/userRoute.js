@@ -1,5 +1,5 @@
 const express = require("express");
-const { GetUser, registerUser, loginUser, logoutUser } = require("../controller/userController");
+const { GetUser, registerUser, loginUser, logoutUser, forgotPassword } = require("../controller/userController");
 const route = express.Router();
 
 route
@@ -12,6 +12,11 @@ route
 
 route
     .route("/logout")
-    .get(logoutUser)    
+    .get(logoutUser);
+
+
+route
+    .route("/forgotPassword")
+    .post(forgotPassword)    
 
 module.exports = route
