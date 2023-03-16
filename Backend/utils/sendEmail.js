@@ -2,19 +2,25 @@ const nodemailer = require("nodemailer");
 
 const sendEmail = async (options) => {
 
-    const transporter = nodemailer.createTransport({
-        // service: process.env.SMPT_SERVICE,
-        // name: "www.khilonaghar.com",
-        host: "smtp.hostinger.com",
-        port: 465,
-        secure: true,
+    // const transporter = nodemailer.createTransport({
+    //     service: process.env.SMPT_SERVICE,
+    //     host: 'smtp.hostinger.com',
+    //     auth: {
+    //         user: process.env.SMPT_MAIL,
+    //         pass: process.env.SMPT_Password
+    //     }
+    // });
+
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.hostinger.com',
+        port: 587,
+        secure: false,
         auth: {
-            // user: process.env.SMPT_MAIL,
-            // pass: process.env.SMPT_Password
-            user: "connect@khilonaghar.com",
-            pass: "Sourabh@12"
+            user: 'connect@khilonaghar.com',
+            pass: 'Sourabh@12'
         }
     });
+
 
 
     const mailOptions = {
@@ -24,7 +30,7 @@ const sendEmail = async (options) => {
         text: options.message
     }
 
-    let msg =  transporter.sendMail(mailOptions, await function (error, info) {
+    await transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log('Error in sending email  ' + error);
             return true;

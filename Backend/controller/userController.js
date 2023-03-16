@@ -3,6 +3,7 @@ const catchAsynicError = require("../middleware/catchAsyicError");
 const ErrorHandler = require("../utils/errorHandler.js");
 const sendToken = require("../utils/JWT_token.js");
 const sendEmail = require("../utils/sendEmail")
+const crypto = require("crypto");
 
 
 exports.GetUser = catchAsynicError(async (req, res,next) => {
@@ -60,6 +61,7 @@ exports.logoutUser = catchAsynicError(async (req, res, next) => {
     })
 });
 
+// Forgot Password
 exports.forgotPassword = catchAsynicError(async (req, res, next) => {
     const user = await userModel.findOne({ email: req.body.email });
 
@@ -69,7 +71,7 @@ exports.forgotPassword = catchAsynicError(async (req, res, next) => {
     const restToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false });
 
-    const restPasswordURL = `${req.protocol}://${req.get("host")}/api/V2/password/rest/${restToken}`;
+    const restPasswordURL = `${req.protocol}://${req.get("host")}/api2/password/rest/${restToken}`;
 
     const message = `Your rest password token is :- \n\n ${restPasswordURL} \n\n if you have not requested this email then please ignore it `
 
@@ -101,4 +103,159 @@ exports.forgotPassword = catchAsynicError(async (req, res, next) => {
 
 
 })
+
+
+exports.restPassword = catchAsynicError(async (req, res, next) => {
+
+    console.log("APICALLED")
+
+    const resetPasswordToken = crypto
+        .createHash("sha256")
+        .update(req.params.token)
+        .digest("hex")
+
+
+    const user = await userModel.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() }
+    });
+
+    if (!user) {
+        return next(new ErrorHandler("Forgot password token is invalid or expired", 400))
+    }
+
+    if (req.body.password !== req.body.confirmPassword) {
+        return next(new ErrorHandler("Password not matched", 400));
+    }
+
+    user.password = req.body.password
+    user.resetPasswordToken = undefined
+    user.resetPasswordExpire = undefined
+    await user.save()
+
+    sendToken(user, 200, res)
+});
+
+exports.updateUser = catchAsynicError(async (req, res, next) => {
+
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+    }
+
+    // cloudinary later
+
+    const User = userModel.findByIdAndUpdate(req.user.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+
+    res.status(200).json({
+        success: true
+    })
+
+});
+
+
+// Get all Users
+exports.getAllUser = catchAsynicError(async (req, res, next) => {
+    const users = await userModel.find();
+
+    res.status(200).json({
+        success: true,
+        users
+    })
+})
+
+// Get Single user 
+exports.getSingleUser = catchAsynicError(async (req, res, next) => {
+
+    const user = await userModel.findById(req.params.id)
+
+    if (!user) {
+        return next(new ErrorHandler(`Does'nt exist user with id ${req.params.id}`, 400))
+    }
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+
+})
+
+
+// Update user Password 
+exports.updatePassword = catchAsynicError(async (req, res, next) => {
+
+
+    const user = await userModel.findById(req.user.id).select("+password");
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword)
+
+    console.log(isPasswordMatched)
+
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Old password dosnt matched1", 400))
+    }
+
+    if (req.body.newPassword !== req.body.confirmPassword) {
+        return next(new ErrorHandler("Old password dosnt matched2", 400))
+    }
+
+    user.password = req.body.newPassword;
+    await user.save()
+
+    sendToken(user, 200, res);
+
+
+});
+
+// Update User
+exports.updateUserRole = catchAsynicError(async (req, res, next) => {
+    const newuserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role,
+    }
+
+    // Cloudinary Later
+
+    const user = await userModel.findByIdAndUpdate(req.user.id, newuserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+
+    res.status(200).json({
+        success: true,
+
+    });
+
+
+})
+
+// Update role 
+exports.deleteUser = catchAsynicError(async (req, res, next) => {
+
+    const user = await userModel.findById(req.params.id)
+    if (!user) {
+        return next(new ErrorHandler("User not Found", 200));
+    }
+
+    await userModel.deleteOne(user);
+
+    res.status(200).json({
+        success: true,
+        message: "User Deleted Successful"
+
+    });
+
+
+});
+
+
+
+
+
+
 

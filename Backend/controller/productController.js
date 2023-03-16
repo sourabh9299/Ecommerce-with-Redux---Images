@@ -90,3 +90,29 @@ exports.getProductDetails = catchAsyicError(async (req, res, next) => {
     
 });
 
+exports.createProductReview = catchAsyicError(async (req, res, next) => {
+    const { rating, comment, productId } = req.body
+
+    const review = {
+        user: req.user._id,
+        name: req.user.name,
+        rating: Number(rating),
+        comment
+    };
+
+    const product = await productsModel.find(productId);
+
+    const isReviewd = product.reviews.find(
+        (rev) => rev.user.toString() === req.user._id.toString()
+    )
+
+    if (isReviewd) {
+
+    }
+
+    else {
+        product.reviews.push(review)
+    }
+
+})
+

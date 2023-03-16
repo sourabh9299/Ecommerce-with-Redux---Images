@@ -12,9 +12,9 @@ exports.isAuthenticatedUser = catchAsyicError(async (req, res, next) => {
     } 
 
     const decoded_user = jwt.verify(token, process.env.JWT_SECRET);
-    req.user =await userModel.findById(decoded_user.id);
-    next()
+    req.user = await userModel.findById(decoded_user.id);
 
+    next()
 });
 
 exports.authorisedRoles = (...roles) => {
