@@ -92,7 +92,6 @@ exports.getProductDetails = catchAsyicError(async (req, res, next) => {
 
 exports.createProductReview = catchAsyicError(async (req, res, next) => {
     const { rating, comment, productId } = req.body
-
     const review = {
         user: req.user._id,
         name: req.user.name,
@@ -100,19 +99,82 @@ exports.createProductReview = catchAsyicError(async (req, res, next) => {
         comment
     };
 
-    const product = await productsModel.find(productId);
-
-    const isReviewd = product.reviews.find(
-        (rev) => rev.user.toString() === req.user._id.toString()
-    )
+    const product = await productsModel.findById(productId);
+    const isReviewd = product.reviews.find((rev) => rev.user.toString() === req.user._id.toString());
 
     if (isReviewd) {
-
+        product.reviews.forEach(rev => {
+            if ((rev) => rev.user.toString() === req.user._id.toString())
+                rev.rating = rating
+            rev.comment = comment
+        });
     }
 
     else {
-        product.reviews.push(review)
+        product.reviews.push(review);
+        product.numberOfReviews = product.reviews.length
     }
 
-})
+    let avg = 0
+    product.ratings = product.reviews.forEach(rev => {
+        avg += rev.rating
+    }) / product.reviews.length
+
+    await product.save({ validateBeforeSave: false });
+    res.status(200).json({
+        success: true
+    })
+});
+
+exports.getAAllReviews = catchAsyicError(async (req, res, next) => {
+    const product = await productsModel.findById(req.params.id);
+
+    if (!product) {
+        return next(new ErrorHandler("product not Found", 404));
+    }
+});
+
+exports.deleteReview = catchAsyicError(async (req, res, next) => {
+    const product = await productsModel.findById(req.query.productId);
+
+    if (!product) {
+        return next(new ErrorHandler("Review not exist", 200));
+    }
+    const reviews = product.reviews.filter(
+        (rev) => rev._id.toString() !== req.query.id.toString()
+    );
+
+    let avg = 0;
+
+    review.forEach((rev) => {
+        avg += rev.rating
+    });
+
+    product.ratings = avg / reviews.length;
+
+    const numsOfReviews = reviews.length;
+
+    await productsModel.findByIdAndUpdate(req.query.productId, {
+        reviews,
+        ratings,
+        numsOfReviews,
+
+    },
+        {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        })
+
+
+    await product.save({ validateBeforeSave: false });
+    res.status(200).json({
+        success: true
+    })
+
+
+
+});
+
+
 

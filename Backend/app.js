@@ -13,6 +13,7 @@ const userRouter = require("./routes/userRoute")
 
 app.use('/api1', Productrouter);
 app.use('/api2', userRouter);
+
 app,
 
 // Middeware for error
