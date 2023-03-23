@@ -1,27 +1,27 @@
 const express = require('express');
 const { getAllProduct, createItem, updateProduct, deleteProduct, getProductDetails, createProductReview, deleteReview, getAAllReviews, } = require('../controller/productController');
 const { isAuthenticatedUser, authorisedRoles } = require('../middleware/auth');
-const routes = express.Router();
+const router = express.Router();
 
-routes
+router
     .route('/products')
     .get(getAllProduct);
 
-routes
+router
     .route('/products/new')    
     .post(isAuthenticatedUser, authorisedRoles("admin"),createItem);
 
-routes
+router
     .route('/products/:id')
     .put(isAuthenticatedUser,updateProduct)
     .delete(isAuthenticatedUser,deleteProduct)
     .get(isAuthenticatedUser,getProductDetails)    
 
-routes
+router
     .route('/products/review/')
     .put(isAuthenticatedUser, createProductReview)
 
-routes
+router
     .route('/products/reviews/')
     .get(getAAllReviews)
     .delete(isAuthenticatedUser, deleteReview);
@@ -29,5 +29,5 @@ routes
 
 
 
-module.exports = routes
+module.exports = router
 

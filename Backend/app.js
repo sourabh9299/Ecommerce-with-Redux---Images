@@ -8,11 +8,13 @@ app.use(cookieparser());
 
 
 
-const Productrouter = require('./routes/productRoute')
+const productRouter = require('./routes/productRoute')
 const userRouter = require("./routes/userRoute")
+const orderRuter = require("./routes/orderRoute")
 
-app.use('/api1', Productrouter);
+app.use('/api1', productRouter);
 app.use('/api2', userRouter);
+app.use('/api3', orderRuter);
 
 // Middeware for error
 app.use(errorMiddleware);
