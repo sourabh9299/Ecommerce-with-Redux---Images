@@ -15,7 +15,6 @@ dotenv.config({ path: "./config/config.env" })
 
 // Connecting DB
 DB_connect()
-
 const server = app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
@@ -24,7 +23,7 @@ const server = app.listen(process.env.PORT, () => {
 // Unhandled Error 
 
  process.on("unhandledRejection", (err) => {
-    console.log(`Error: ${err.messsage}`);
+     console.log(`Error: ${err.message}`);
      console.log(`Shutting Down the server !`);
      
      server.close(() => {

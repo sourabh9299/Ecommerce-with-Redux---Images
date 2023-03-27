@@ -5,33 +5,22 @@ const orderSchema = new mongoose.Schema({
     shippingInfo: {
         address: {
             type: String,
-            default: "House-no",
-            required: true
         },
         city: {
             type: String,
-            default: "City",
-            required: true
         },
         state: {
             type: String,
-            default: "state",
-            required: true
         },
         country: {
             type: String,
-            default: "india",
-            required: true
         },
         pinCode: {
             type: Number,
-            default: 20,
-            required: true
         },
         phoneNumber: {
             type: Number,
-            default: 9999999999,
-            required: true
+
         }
 
     },
@@ -44,13 +33,10 @@ const orderSchema = new mongoose.Schema({
             product: {
                 type: mongoose.Schema.ObjectId,
                 ref: "productModel",
-                required: true
+                required: [true, "Please fill Details"]
             }
         }
     ],
-    "userId": {
-
-    },
     paymentInfo: {
         id: {
             type: String, required: true
@@ -67,30 +53,40 @@ const orderSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
+
     taxPrice: {
         type: Number,
         required: true,
         default: 0
     },
+
     shippingPrice: {
         type: Number,
         required: true,
         default: 0
     },
+
     totalPrice: {
         type: Number,
         required: true,
         default: 0
     },
+
     orderStatus: {
         type: String,
         default: "processing",
         required: true
     },
+
     deliveryDate: Date,
     createdAt: {
         type: Date,
         default: Date.now()
+    },
+    "user": {
+        type: mongoose.Schema.ObjectId,
+        ref: "userModel",
+        required: true
     }
 
 });

@@ -5,8 +5,10 @@ const APiFeatures = require("../utils/apiFeatures.js");
 // Create Item
 exports.createItem = catchAsyicError(async (req, res, next) => {
     
+    console.log(req.body)
+
     req.body.user = req.user.id
-        
+    
     const Product = await productsModel.findOne({ name: req.body.name, description: req.body.description });
     if (Product) {
         res.json({ message: "product already exist" });
