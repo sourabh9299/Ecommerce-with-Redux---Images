@@ -1,0 +1,55 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding:0 ;
+}
+
+.menuBurger{
+    height: 4vmax;
+}
+
+#foot-css img{
+    height: 100px;
+    /* width: 20px; */
+}
+#foot-css{
+    background-color: rgba(0, 0, 0, 0.863);
+    color: white;
+    margin-top: 10vmax;
+    padding: 2vmax;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#foot-1{
+    width: 10%;
+    text-align: center;
+
+}
+#foot-2{
+    width: 80%;
+    text-align: center;
+}
+#foot-3{
+    text-align: left;
+    width: 10%;
+
+}
+
+#foot-3 ul li{
+    text-align: left;
+}
+#foot-3 ul li::marker{
+    content: '';
+}
+
+h3{
+    font-family: 'roboto';
+    margin-bottom: 10px;
+}
+
+@media screen {
+    
+}
+
