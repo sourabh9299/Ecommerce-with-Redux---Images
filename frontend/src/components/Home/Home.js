@@ -6,6 +6,7 @@ import "../Home/Product.css"
 import MetaDeta from "../layout/MetaDeta";
 import { getProducts } from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux"
+import Loader from "../layout/loader/Loader";
 
 
 
@@ -23,6 +24,7 @@ function Home() {
 
    return (
       <>
+      {loading? <Loader />:<>
          <MetaDeta title="Khilonaghar" />
          <div className="Banner">
             <p>Welcome to KhilonaGhar</p>
@@ -42,6 +44,7 @@ function Home() {
             {products && products.map((product)=><Product product={product} />)}
            
          </div>
+      </>}
       </>
 
    )

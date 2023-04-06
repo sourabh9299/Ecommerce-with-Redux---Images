@@ -1,0 +1,27 @@
+.main-loader{
+    width: 100vw;
+    height: 100vh;
+    background-color:rgb(255, 255, 255) ;
+    width: 100%;
+    display: grid;
+    place-content: center;
+
+
+  
+
+}
+
+.main-loader >div{
+    border-radius: 100%;
+   width: 10vmax;
+   height: 10vmax;
+   /* background: tomato; */
+   border-bottom: 2px solid black;
+   animation: Loader-rotating 800ms linear infinite;
+}
+
+@keyframes Loader-rotating {
+    to{
+        transform: rotateZ(-360deg);
+    }
+}
