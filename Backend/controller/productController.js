@@ -4,7 +4,7 @@ const catchAsyicError = require("../middleware/catchAsyicError");
 const APiFeatures = require("../utils/apiFeatures.js");
 // Create Item
 exports.createItem = catchAsyicError(async (req, res, next) => {
-    
+
     console.log(req.body)
 
     req.body.user = req.user.id
@@ -18,11 +18,11 @@ exports.createItem = catchAsyicError(async (req, res, next) => {
         res.json({ message: "Product Added", pro });
     }
         
-
 });
 
 // Get all Product
 exports.getAllProduct = catchAsyicError(async (req, res) => {
+
     const resPerPage = 4;
     const productsCount = await productsModel.countDocuments();
 
