@@ -14,7 +14,7 @@ const options = {
 
 const Product = ({ product }) => {
     return (
-        <Link className='productCard' to={product._id}>
+        <Link className='productCard' to={`product/${product._id}`}>
             <div className='Card'>
                 <img src={product.images[0].url} alt="error" />
                 <p> {product.name}</p>
@@ -25,8 +25,6 @@ const Product = ({ product }) => {
                 <p>{product.price}</p>
             </div>
         </Link>
-
-
     )
 }
 

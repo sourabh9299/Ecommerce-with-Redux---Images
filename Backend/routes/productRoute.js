@@ -12,7 +12,7 @@ router
     .post(isAuthenticatedUser, authorisedRoles("admin"),createItem);
 
 router
-    .route('/products/:id')
+    .route('/product/:id')
     .put(isAuthenticatedUser,updateProduct)
     .delete(isAuthenticatedUser,deleteProduct)
     .get(isAuthenticatedUser,getProductDetails)    

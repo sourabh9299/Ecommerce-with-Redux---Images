@@ -3,9 +3,9 @@ const ErrorHandler = require("../utils/errorHandler.js");
 const catchAsyicError = require("../middleware/catchAsyicError");
 const APiFeatures = require("../utils/apiFeatures.js");
 // Create Item
-exports.createItem = catchAsyicError(async (req, res, next) => {
 
-    console.log(req.body)
+
+exports.createItem = catchAsyicError(async (req, res, next) => {
 
     req.body.user = req.user.id
     
