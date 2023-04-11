@@ -15,7 +15,7 @@ router
     .route('/product/:id')
     .put(isAuthenticatedUser,updateProduct)
     .delete(isAuthenticatedUser,deleteProduct)
-    .get(isAuthenticatedUser,getProductDetails)    
+    .get(getProductDetails)    
 
 router
     .route('/products/review/')

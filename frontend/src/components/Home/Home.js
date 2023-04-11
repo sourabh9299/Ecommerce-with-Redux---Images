@@ -4,7 +4,7 @@ import { FaMouse } from "react-icons/fa"
 import Product from "./Product";
 import "../Home/Product.css"
 import MetaDeta from "../layout/MetaDeta";
-import { getProducts } from "../../actions/productAction";
+import { getProductDetails, getProducts } from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../layout/loader/Loader";
 import { useAlert } from "react-alert";
@@ -22,6 +22,7 @@ function Home() {
          return Alert.error(error)
       }
       dispatch(getProducts());
+      
 
    }, [dispatch, error, Alert])
 

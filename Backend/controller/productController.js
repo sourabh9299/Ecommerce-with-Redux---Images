@@ -86,7 +86,8 @@ exports.getProductDetails = catchAsyicError(async (req, res, next) => {
     }
     else {
         res.json({
-            Message: product
+            success: true,
+            product
         })
     }
     

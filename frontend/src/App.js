@@ -6,12 +6,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import Home from './components/Home/Home';
 import ProductDetails from './components/Home/ProductDetails';
-
-
-
+ 
 
 function App() {
-
   useEffect(() => {
     WebFont.load({
       google: {
