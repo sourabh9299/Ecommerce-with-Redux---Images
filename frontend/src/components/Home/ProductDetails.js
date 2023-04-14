@@ -4,25 +4,28 @@ import { useParams } from 'react-router-dom';
 import "./productDetails.css"
 import ReactStars from "react-rating-stars-component"
 import { useSelector, useDispatch } from "react-redux"
-import { getProductDetails } from '../../actions/productAction'
+import { clearError, getProductDetails } from '../../actions/productAction'
 import ReviewCard from './ReviewCard.js'
+import Loader from '../layout/loader/Loader';
+import { useAlert } from "react-alert";
 
 
 
 const ProductDetails = () => {
 
+   
+    const alert = useAlert()
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { product, loading,error } = useSelector(state => state.productDetail)
+
     const options = {
         edit: false,
         color: "rgba(20,20,20,0.1)",
         activeColor: "tomato",
-        value: 2.5,
+        value: product.ratings,
         size: 18
     }
-
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const { product } = useSelector(state => state.productDetail)
-    console.log(product)
 
     function scrool() {
 
@@ -31,106 +34,127 @@ const ProductDetails = () => {
     }
 
     useEffect(() => {
-
+        if (error) {
+            alert.error(error);
+            dispatch(clearError());
+        }
         dispatch(getProductDetails(id));
+        
 
-    }, [dispatch, id])
+    }, [dispatch, id,error,alert])
 
 
 
     return (
         <Fragment>
-            {window.scrollTo()}
-            <div className='productDetails'>
+            {loading ? <Loader /> :
+             <Fragment>
+                {window.scrollTo()}
+                <div className='productDetails'>
 
-                <div className='detailsblock-1'>
-                    <Carousel>
-                        {product.images && product.images.map((item, i) =>
-                            <div>
+                    <div className='detailsblock-1'>
+                        <Carousel arrow={false}>
+                            {product.images && product.images.map((item, i) =>
+                                <div className='img-box'>
 
-                                <img
-                                    key={item.url}
-                                    src={item.url}
-                                    alt={item.url}
-                                />
+                                    <img
+                                        key={item.url}
+                                        src={item.url}
+                                        alt={item.url}
+                                    />
 
 
-                            </div>
+                                </div>
 
-                        )}
-                    </Carousel>
-                </div>
-
-                <div className='detailsblock-2'>
-
-                    <div className='detailsblock-2-1'>
-                        <h1>
-                            {product.name}
-                        </h1>
-                        <p>
-                            Product # {product._id}
-                        </p>
+                            )}
+                        </Carousel>
                     </div>
 
-                    <div className='detailsblock-2-2'>
+                    <div className='detailsblock-2'>
 
-                        <h2>
-                            {"₹ " + product.price}
-                        </h2>
-                        <div>
-                            <p >
-                                Status :
-                                <span className={product.stock >= 1 ? "greenColor" : "redColor"}>
-                                    {product.stock >= 1 ? "Available" : "Out of Stock"}
-                                </span>
+                        <div className='detailsblock-2-1'>
+                            <h1>
+                                {product.name}
+                            </h1>
+                            <p>
+                                Product # {product._id}
                             </p>
                         </div>
 
-                        <ReactStars {...options} />
-                    </div>
+                        <div className='detailsblock-2-2'>
 
-                    <div className='detailsblock-2-3'>
+                            <h2>
+                                {"₹ " + product.price}
+                            </h2>
+                            <div>
+                                <p >
+                                    Status :
+                                    <span className={product.stock >= 1 ? "greenColor" : "redColor"}>
+                                        {product.stock >= 1 ? "Available" : "Out of Stock"}
+                                    </span>
+                                </p>
+                            </div>
 
-                        <div>
-                            <button>
-                                -
-                            </button>
-                            <input type='number'></input>
-                            <button>
-                                +
-                            </button>
+                            <ReactStars {...options} />
+                        </div>
+
+                        <div className='detailsblock-2-3'>
+
+                            <div>
+                                <button>
+                                    -
+                                </button>
+                                <input type='number'></input>
+                                <button>
+                                    +
+                                </button>
+                            </div>
+
+                            <div>
+                                <button>
+                                    Add to cart
+                                </button>
+                            </div>
+
                         </div>
 
                         <div>
-                            <button>
-                                Add to cart
-                            </button>
+                            <h3>
+                                description:
+                            </h3>
+                            <p>
+                                {product.description}
+                            </p>
                         </div>
 
-                    </div>
-
-                    <div>
-                        <h3>
-                        description:
-                        </h3>
-                        <p>
-                            {product.description}
-                        </p>
                     </div>
 
                 </div>
 
-            </div>
+                {scrool()}
+                <div>
+                    <h1 className='Review-heading'>
+                        Reviews
+                    </h1>
+                </div>
+                <div>
+                    {product.reviews && product.reviews[0] ? (
+                        <div className='Reviews'>
+                            {product.reviews.map((review) => 
+                               
+                               <ReviewCard reviews={review} />
+                               )}
+                        </div>
+                    ) : <div>
+                        No Reviews
+                    </div>}
 
-            {scrool()}
-    <div>
-        {product.reviews.map((review)=>{
-            <ReviewCard review={review} />
-        })}
-    </div>
+                    {/* {product.reviews[0].comment} */}
+                </div>
 
 
 
+            </Fragment>}
         </Fragment>
     )
 

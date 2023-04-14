@@ -49,7 +49,10 @@ h3{
     margin-bottom: 10px;
 }
 
-@media screen {
+ @media only screen and (max-width: 998px) {
     
+#foot-css{
+flex-direction:column ;
+}
 }
 

@@ -1,0 +1,10 @@
+
+.ReviewBox{
+    padding: 2em;
+    width: 30%;
+}
+
+.ReviewBox img{
+    height:50px;
+    width:50px
+}

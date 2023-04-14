@@ -4,7 +4,7 @@ import { FaMouse } from "react-icons/fa"
 import Product from "./Product";
 import "../Home/Product.css"
 import MetaDeta from "../layout/MetaDeta";
-import { getProductDetails, getProducts } from "../../actions/productAction";
+import {  clearError, getProducts } from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../layout/loader/Loader";
 import { useAlert } from "react-alert";
@@ -16,10 +16,11 @@ function Home() {
    const dispatch = useDispatch()
    const Alert = useAlert();
 
-   const { loading, error, products, productsCount } = useSelector(state => state.products);
+   const { loading, error, products } = useSelector(state => state.products);
    useEffect(() => {
       if (error) {
-         return Alert.error(error)
+          Alert.error(error);
+          dispatch(clearError());
       }
       dispatch(getProducts());
       

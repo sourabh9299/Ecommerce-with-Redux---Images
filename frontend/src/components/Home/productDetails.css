@@ -1,9 +1,8 @@
 
 
 .productDetails{
-    margin: 90px;
+    height: auto;
     max-width: 100vmax;
-    height: 100vmax;
  display: flex;
  
 }
@@ -25,6 +24,17 @@
     align-items: flex-start;
     padding: 1vmax;
     justify-content: space-evenly;
+}
+
+.img-box{
+    text-align: center;
+    padding: 50px;
+    height: auto;
+}
+
+.img-box img{
+    height: 100%;
+    width: 100%;
 }
 
 .greenColor{
@@ -75,7 +85,23 @@
 
 }
 
+.Review-heading{
+text-align: center;
+}
 
-@media screen {
+
+@media only screen and (max-width: 998px) {
+    .productDetails{
+        flex-direction: column;
+    }
+    .img-box{
+        text-align: center;
+        padding: 10px;
+        height: auto;
+    }
     
+    .img-box img{
+        height: 100%;
+        width: 100%;
+    }
 }
