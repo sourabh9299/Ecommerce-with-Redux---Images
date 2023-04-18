@@ -1,0 +1,47 @@
+.Searchbox-main{
+}
+
+.searchBox{
+    height: 10vmax;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+ .searchBox input[type=text]::placeholder{
+    text-align: center;
+    padding-left:10px ;
+
+    
+ }
+
+ .searchBox input[type=text]:focus-visible {
+    outline: none;
+ }
+
+ .searchBox input[type=text] {
+    padding-left: 1%;
+ }
+
+
+ .searchBox input[type=submit]{
+    width: auto;
+    padding: 5px;
+    margin-inline: 1%;
+    border-radius: 0;
+
+ }
+ .searchBox input[type=submit]:hover{
+     transition-duration: .3s;
+    background: linear-gradient(to right ,rgb(76, 76, 212) ,rgb(9, 9, 88));
+    color: white;
+ }
+
+ .searchBox input[type=text]{
+    width: 25%;
+    background: white;
+    border-radius: 0;
+} 

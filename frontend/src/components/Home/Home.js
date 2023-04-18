@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "../Home/home.css"
 import { FaMouse } from "react-icons/fa"
-import Product from "./Product";
+import Product from "./ProductCard";
 import "../Home/Product.css"
 import MetaDeta from "../layout/MetaDeta";
 import {  clearError, getProducts } from "../../actions/productAction";

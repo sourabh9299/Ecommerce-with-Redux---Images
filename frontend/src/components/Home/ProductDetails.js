@@ -17,7 +17,7 @@ const ProductDetails = () => {
     const alert = useAlert()
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { product, loading,error } = useSelector(state => state.productDetail)
+    const { loading,error,product  } = useSelector(state => state.productDetail)
 
     const options = {
         edit: false,

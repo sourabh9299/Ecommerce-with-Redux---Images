@@ -23,21 +23,22 @@ exports.createItem = catchAsyicError(async (req, res, next) => {
 // Get all Product
 exports.getAllProduct = catchAsyicError(async (req, res) => {
 
-    const resPerPage = 4;
+    const resultPerPage = 8;
     const productsCount = await productsModel.countDocuments();
 
     const apiFeatures = new APiFeatures(productsModel.find(), req.query)
         .search()
-        .filter();
+        .filter()
+        .pagination(resultPerPage);
 
     let products = await apiFeatures.query;
     let filteredProductsCount = products.length;
-    apiFeatures.pagination(resPerPage);
+    apiFeatures.pagination(resultPerPage);
 
     res.status(200).json({
         success: true,
         productsCount,
-        resPerPage,
+        resultPerPage,
         filteredProductsCount,
         products,
     });

@@ -1,0 +1,37 @@
+.products{
+    display: flex;
+    margin: auto;
+    justify-content: flex-start;
+    padding:0 5vmax;
+    /* align-items: center; */
+    flex-wrap: wrap;
+
+}
+
+.products-heading {
+    margin-top:5vmax;
+    text-align: center;
+}
+
+.pagination-box .pagination{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    
+}
+
+.pagination li::marker{
+    content: '';
+}
+.pagination li a{
+    text-decoration: none;
+    color: blue;
+}
+.pagination li{
+    margin-inline:1px ;
+    width: 50px;
+    height: 25px;
+    border: 1px solid black;
+
+}
+
