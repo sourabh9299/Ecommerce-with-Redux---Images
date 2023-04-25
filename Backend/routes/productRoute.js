@@ -8,7 +8,7 @@ router
     .get(getAllProduct);
 
 router
-    .route('/products/new')    
+    .route('/product/new')    
     .post(isAuthenticatedUser, authorisedRoles("admin"),createItem);
 
 router

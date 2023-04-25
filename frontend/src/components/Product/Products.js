@@ -14,7 +14,8 @@ import ProductCard from '../Home/ProductCard';
 
 
 function Products() {
-    const [CurrentPage, setCurrentPage] = useState(1)
+    const [CurrentPage, setCurrentPage] = useState(1);
+    const [price, setPrice] = useState([0,25000]);
     const { keyword } = useParams()
 
     const setCurrentPageNo = (e) => {
@@ -22,9 +23,13 @@ function Products() {
         console.log(CurrentPage)
     }
 
+const priceHandler =(event,newPrice)=>{
+    setPrice(newPrice)
+}
+
     const Alert = useAlert()
     const dispatch = useDispatch()
-    const { loading, error, products, productCount, resultPerPage, filteredProductsCount } = useSelector(state => state.products);
+    const { loading, error, products, productsCount, resultPerPage, filteredProductsCount } = useSelector(state => state.products);
     useEffect(() => {
 
         dispatch(getProducts(keyword, CurrentPage));
@@ -51,25 +56,32 @@ function Products() {
                 </div>
 
                 <div className='Sliderbox'>
-                    {/* <Typography>
+                    <Typography>
                         <Slider
                             value={price}
+                            onChange={priceHandler}
+                            valueLabelDisplay='auto'
+                            aria-label='range-slider'
+                            min={0}
+                            max={25000}
                         />
-                    </Typography> */}
+                    </Typography>
                 </div>
 
                 <div className='pagination-box'>
                     <Pagination
                         activePage={CurrentPage}
                         itemsCountPerPage={resultPerPage}
-                        totalItemsCount={productCount}
+                        totalItemsCount={productsCount}
                         onChange={setCurrentPageNo}
-                        nextPageText={"Next"}
-                        prevPageText={"Prev"}
-                        firstPageText={"1st"}
-                        lastPageText={"Last"}
-                        itemClass='Page-Items'
-                        activeClass='page-item-active'
+                        nextPageText=">"
+                        prevPageText="<"
+                        firstPageText="Home"
+                        lastPageText="Last"
+                        itemClass='page-item'
+                        linkClass='page-link'
+                        activeClass='pageItemActive'
+                        activeLinkClass='pageLinkActive'
                     />
                 </div>
             </Fragment>}

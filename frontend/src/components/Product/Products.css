@@ -25,13 +25,54 @@
 }
 .pagination li a{
     text-decoration: none;
-    color: blue;
+    color: rgba(42, 42, 189, 0.603);
 }
 .pagination li{
     margin-inline:1px ;
     width: 50px;
     height: 25px;
     border: 1px solid black;
+    padding: 0.1em;
 
 }
 
+.pagination li:hover{
+    background-color:rgba(42, 42, 189, 0.603);
+    color: white;
+    transition-duration: .3s;
+    cursor: pointer;
+
+
+}
+
+.pagination li:hover a{
+    color: white;
+    transition-duration: .3s;
+}
+
+
+li.pageItemActive a{
+    color: white;
+
+}
+li.pageItemActive {
+    text-decoration: none;
+    background-color:rgba(255, 0, 0, 0.628);
+}
+
+.pagination li:first-child{
+    border-radius: 5px 0px 0px 5px;
+}
+
+.pagination li:last-child{
+    border-radius: 0px 5px 5px 0px;
+
+
+}
+
+.Sliderbox {
+    width: 200px;
+    padding:0 20px;
+    border: 1px solid black;
+    margin: 0 10px;
+}

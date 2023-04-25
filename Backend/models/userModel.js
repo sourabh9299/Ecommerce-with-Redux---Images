@@ -61,6 +61,7 @@ userSchema.methods.getJwtToken = function () {
 }
 
 // Compare Password 
+
 userSchema.methods.comparePassword = async function (enterdPassword) {
     return await brcypt.compare(enterdPassword, this.password); 
 }
